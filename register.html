@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - LAVENDA BEAUTY</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💄</text></svg>">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main>
+    <div class="form-box">
+        <h2>إنشاء حساب جديد ✨</h2>
+        <div id="alert"></div>
+
+        <form onsubmit="register(event)">
+            <input type="text" name="name" placeholder="الاسم الكامل" required>
+            <input type="email" name="email" placeholder="البريد الإلكتروني" required>
+            <input type="password" name="password" placeholder="كلمة المرور (6 أحرف على الأقل)" required minlength="6">
+            <button class="btn" type="submit">إنشاء الحساب</button>
+        </form>
+
+        <p class="form-link">
+            لديك حساب بالفعل؟ <a href="login.html">سجلي الدخول</a>
+        </p>
+    </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+    async function register(e) {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        try {
+            await Auth.register({
+                name: fd.get('name'),
+                email: fd.get('email'),
+                password: fd.get('password'),
+            });
+            UI.toast('تم إنشاء حسابك بنجاح 💗', 'success');
+            setTimeout(() => location.href = 'login.html', 700);
+        } catch (err) {
+            document.getElementById('alert').innerHTML =
+                `<div class="alert error">${escapeHtml(err.message)}</div>`;
+        }
+    }
+</script>
+</body>
+</html>
