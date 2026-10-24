@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلباتي - LAVENDA BEAUTY</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💄</text></svg>">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main>
+    <h2 class="title">طلباتي 🛒</h2>
+    <div class="orders-list" id="ordersList"></div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+    if (!Auth.isLoggedIn()) {
+        location.href = 'login.html';
+    } else {
+        render();
+    }
+
+    function render() {
+        const user = Auth.currentUser();
+        const orders = Orders.forUser(user.id);
+        const host = document.getElementById('ordersList');
+
+        if (!orders.length) {
+            host.innerHTML = `
+                <div class="empty">
+                    <span class="big-icon">🛒</span>
+                    لا توجد طلبات بعد.
+                    <br><br>
+                    <a href="products.html">تصفحي المنتجات</a>
+                </div>`;
+            return;
+        }
+
+        host.innerHTML = `
+            <div class="orders-grid">
+                ${orders.map(o => {
+                    const st = Orders.statusLabel(o.status);
+                    return `
+                        <div class="order-card">
+                            <img src="${escapeHtml(o.product_image)}" alt="${escapeHtml(o.product_name)}">
+                            <h3>${escapeHtml(o.product_name)}</h3>
+                            <p class="meta">الكمية: ${o.quantity}</p>
+                            <p class="meta price">الإجمالي: ${formatPrice(o.total_price)}</p>
+                            <span class="status status-${st.cls}">${st.text}</span>
+                            <span class="date">${new Date(o.created_at).toLocaleString('ar-EG')}</span>
+                        </div>
+                    `;
+                }).join('')}
+            </div>`;
+    }
+</script>
+</body>
+</html>
