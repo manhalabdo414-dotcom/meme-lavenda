@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LAVENDA BEAUTY - متجرك المفضل لمنتجات التجميل والعناية بالبشرة">
+    <title>LAVENDA BEAUTY - الرئيسية</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💄</text></svg>">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main>
+    <section class="hero">
+        <div class="hero-text">
+            <h1>جمالك يبدأ من هنا 💗</h1>
+            <p>اكتشفي عالم الجمال والعناية ببشرتك. اختاري منتجاتك المفضلة وتألقي كل يوم.</p>
+            <a href="products.html" class="btn">اكتشفي منتجاتنا ✨</a>
+        </div>
+        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600"
+             alt="منتجات تجميل" loading="lazy">
+    </section>
+
+    <h2 class="title">لمسة جمالك الخاصة</h2>
+
+    <section class="products-grid" id="featuredGrid"></section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+    document.getElementById('featuredGrid').innerHTML =
+        PRODUCTS.map(p => UI.productCard(p)).join('');
+</script>
+</body>
+</html>
