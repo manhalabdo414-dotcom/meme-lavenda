@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا - LAVENDA BEAUTY</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💄</text></svg>">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main>
+    <div class="form-box">
+        <h2>يسعدنا تواصلك معنا ✨</h2>
+        <div id="alert"></div>
+
+        <form onsubmit="sendMessage(event)">
+            <input type="text" name="name" placeholder="الاسم" required>
+            <input type="email" name="email" placeholder="البريد الإلكتروني" required>
+            <textarea name="message" rows="5" placeholder="اكتبي رسالتك هنا..." required></textarea>
+            <button class="btn" type="submit">إرسال الرسالة</button>
+        </form>
+    </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+    function sendMessage(e) {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        Messages.create({
+            name: fd.get('name'),
+            email: fd.get('email'),
+            message: fd.get('message'),
+        });
+        document.getElementById('alert').innerHTML =
+            '<div class="alert success">تم إرسال رسالتك بنجاح 💗 سنتواصل معك قريباً</div>';
+        e.target.reset();
+        UI.toast('تم إرسال الرسالة ✅', 'success');
+    }
+</script>
+</body>
+</html>
